@@ -3,14 +3,26 @@ import { Switch } from 'react-router-dom';
 
 import Route from './Routes';
 
-import SignIn from '../pages/SignIn';
-import SignUp from '../pages/SignUp';
-import ForgotPassword from '../pages/ForgotPassword';
-import ResetPassword from '../pages/ResetPassword';
+import RoutesCompany from '../pages/Company/Routes';
+
+// Login
+import SignIn from '../pages/Login/SignIn';
+import SignUp from '../pages/Login/SignUp';
+import ForgotPassword from '../pages/Login/ForgotPassword';
+import ResetPassword from '../pages/Login/ResetPassword';
+
+// User
+import Profile from '../pages/User/Profile';
+import CreateUser from '../pages/User/CreateUser';
+
+// Administrative tasks
 
 import Dashboard from '../pages/Dashboard';
-import Profile from '../pages/Profile';
 import CreateAppointment from '../pages/CreateAppointment';
+import Providers from '../pages/Providers';
+
+// Company
+import CompanyPanel from '../pages/Company';
 
 const Routes: React.FC = () => (
   <Switch>
@@ -22,6 +34,12 @@ const Routes: React.FC = () => (
     <Route path="/dashboard" component={Dashboard} isPrivate />
     <Route path="/profile" component={Profile} isPrivate />
     <Route path="/create-appointment" component={CreateAppointment} isPrivate />
+    <Route path="/providers" component={Providers} isPrivate />
+    <Route path="/create-user" component={CreateUser} isPrivate />
+    <RoutesCompany />
+
+    {/* Company */}
+    {/* <Route path="/company" component={CompanyPanel} isPrivate /> */}
   </Switch>
 );
 

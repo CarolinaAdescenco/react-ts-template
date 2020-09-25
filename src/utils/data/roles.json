@@ -1,0 +1,26 @@
+{
+  "roles": [
+      {
+        "value": "administrator",
+        "label": "Administrador"
+      },
+      {
+        "value": "recepcionist",
+        "label": "Recepcionista"
+      }
+  ],
+  "plans": [
+    {
+      "value": "basic",
+      "label": "Basico"
+    },
+    {
+      "value": "premium",
+      "label": "Premium"
+    },
+    {
+      "value": "pro",
+      "label": "Pro"
+    }
+  ]
+}
