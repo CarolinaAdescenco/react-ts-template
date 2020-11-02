@@ -16,6 +16,13 @@ const CompanyPanel: React.FC = () => {
           </TitleWidget>
         </WidgetCard>
       </Link>
+      <Link to="/users">
+        <WidgetCard>
+          <TitleWidget>
+            <FiBriefcase /> Pessoas
+          </TitleWidget>
+        </WidgetCard>
+      </Link>
     </Layout>
   );
 };

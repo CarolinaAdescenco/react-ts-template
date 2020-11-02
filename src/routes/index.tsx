@@ -1,9 +1,6 @@
 import React from 'react';
-import { Switch } from 'react-router-dom';
-
+import { Redirect, Switch } from 'react-router-dom';
 import Route from './Routes';
-
-import RoutesCompany from '../pages/Company/Routes';
 
 // Login
 import SignIn from '../pages/Login/SignIn';
@@ -11,36 +8,57 @@ import SignUp from '../pages/Login/SignUp';
 import ForgotPassword from '../pages/Login/ForgotPassword';
 import ResetPassword from '../pages/Login/ResetPassword';
 
-// User
-import Profile from '../pages/User/Profile';
-import CreateUser from '../pages/User/CreateUser';
-
 // Administrative tasks
-
 import Dashboard from '../pages/Dashboard';
 import CreateAppointment from '../pages/CreateAppointment';
 import Providers from '../pages/Providers';
 
-// Company
-import CompanyPanel from '../pages/Company';
+import CompanyPage from '../pages/Company/CompanyPage';
+import CreateCompany from '../pages/Company/CreateCompany';
 
-const Routes: React.FC = () => (
-  <Switch>
-    <Route path="/" exact component={SignIn} />
-    <Route path="/signup" component={SignUp} />
-    <Route path="/forgot-password" component={ForgotPassword} />
-    <Route path="/reset-password" component={ResetPassword} />
+import UserPage from '../pages/User/UserPage';
+import Profile from '../pages/User/Profile';
+import CreateUser from '../pages/User/CreateUser';
+import { useAuth } from '../hooks/auth';
+import { useToast } from '../hooks/toast';
 
-    <Route path="/dashboard" component={Dashboard} isPrivate />
-    <Route path="/profile" component={Profile} isPrivate />
-    <Route path="/create-appointment" component={CreateAppointment} isPrivate />
-    <Route path="/providers" component={Providers} isPrivate />
-    <Route path="/create-user" component={CreateUser} isPrivate />
-    <RoutesCompany />
+const Routes: React.FC = () => {
+  const { user } = useAuth();
+  const { addToast } = useToast();
 
-    {/* Company */}
-    {/* <Route path="/company" component={CompanyPanel} isPrivate /> */}
-  </Switch>
-);
+  // const renderDefault = () => (
+  //   <>
+  //     <Redirect to="/" />
+  //     {addToast({
+  //       type: 'error',
+  //       title: 'Acesso negado!',
+  //       description: 'Você não tem permissão para acessar esta área',
+  //     })}
+  //   </>
+  // );
+  return (
+    <Switch>
+      <Route path="/" exact component={SignIn} />
+      <Route path="/signup" component={SignUp} />
+      <Route path="/forgot-password" component={ForgotPassword} />
+      <Route path="/reset-password" component={ResetPassword} />
+
+      <Route path="/dashboard" component={Dashboard} isPrivate />
+      <Route
+        path="/create-appointment"
+        component={CreateAppointment}
+        isPrivate
+      />
+      <Route path="/providers" component={Providers} isPrivate />
+
+      <Route path="/companies" component={CompanyPage} isPrivate />
+      <Route path="/create-company" component={CreateCompany} isPrivate />
+
+      <Route path="/create-user" component={CreateUser} isPrivate />
+      <Route path="/users" component={UserPage} isPrivate />
+      <Route path="/update-profile" component={Profile} isPrivate />
+    </Switch>
+  );
+};
 
 export default Routes;

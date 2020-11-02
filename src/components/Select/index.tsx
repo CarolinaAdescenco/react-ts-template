@@ -11,8 +11,8 @@ import { useField } from '@unform/core';
 import { Container } from './styles';
 
 interface Data {
-  value: string;
-  label: string;
+  id: string;
+  name: string;
 }
 
 interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
@@ -62,8 +62,8 @@ const Select: React.FC<SelectProps> = ({ name, data, icon: Icon, ...rest }) => {
         {...rest}
       >
         {data.map((item, i) => (
-          <option key={i} value={item.value}>
-            {item.label}
+          <option key={i} value={item.id}>
+            {item.name}
           </option>
         ))}
       </select>

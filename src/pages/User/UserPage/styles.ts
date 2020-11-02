@@ -1,20 +1,9 @@
 import styled from 'styled-components';
-
 import { device } from '../../../styles/devices';
 
 interface SelectorProps {
   selected: boolean;
 }
-
-export const Container = styled.section`
-  display: flex;
-  flex-direction: column;
-
-  @media ${device.md} {
-    flex-direction: row;
-    justify-content: space-between;
-  }
-`;
 
 export const Selector = styled.div<SelectorProps>`
   display: flex;

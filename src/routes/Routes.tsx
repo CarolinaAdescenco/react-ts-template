@@ -7,6 +7,18 @@ import {
 
 import { useAuth } from '../hooks/auth';
 
+// enum roles {
+//   root = 'root',
+//   admin = 'administrator',
+//   common = 'common',
+// }
+
+// interface UserRoles {
+//   root: [roles.root, roles.admin, roles.common];
+//   admin: [roles.admin];
+//   all: [roles.common];
+// }
+
 interface RouteProps extends ReactDOMRouteProps {
   isPrivate?: boolean;
   component: React.ComponentType;

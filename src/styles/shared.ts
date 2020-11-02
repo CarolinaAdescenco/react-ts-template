@@ -31,10 +31,3 @@ export const Container = styled.div`
   padding: 0 15px;
   margin: auto;
 `;
-
-export const WrapperForm = styled.div`
-  @media ${device.md} {
-    width: 100%;
-    max-width: 65%;
-  }
-`;

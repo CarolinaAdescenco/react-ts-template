@@ -2,7 +2,7 @@ import React, { useRef, useCallback } from 'react';
 import { FiAward, FiMail, FiPlus, FiUser, FiUserCheck } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import getValidationErrors from '../../../utils/getValidationErrors';
@@ -17,9 +17,10 @@ import Layout from '../../../shared/layout';
 
 import { plans } from '../../../utils/data/roles.json';
 
-import { WrapperForm } from '../../../styles/shared';
-import { TitlePage } from '../styles';
+// import { TitlePage } from '../styles';
 import { ButtonBack } from './styles';
+import WidgetForm from '../../../shared/WidgetForm';
+import TitlePage from '../../../shared/TitlePage';
 
 interface CreateCompanyFormData {
   name: string;
@@ -80,14 +81,9 @@ const CreateCompany: React.FC = () => {
   );
   return (
     <Layout>
-      <WrapperForm>
+      <WidgetForm>
         <Form ref={formRef} onSubmit={handleSubmit}>
-          <TitlePage>
-            <span>
-              <FiPlus />
-              Criar nova empresa
-            </span>
-          </TitlePage>
+          <TitlePage icon={<FiPlus />} text="Criar nova empresa" />
 
           <Input name="name" icon={FiUser} placeholder="Nome" />
           <Input
@@ -101,7 +97,7 @@ const CreateCompany: React.FC = () => {
           <Button type="submit">Cadastrar</Button>
           <ButtonBack to="/companies">Cancelar</ButtonBack>
         </Form>
-      </WrapperForm>
+      </WidgetForm>
     </Layout>
   );
 };

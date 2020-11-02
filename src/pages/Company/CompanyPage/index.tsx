@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { FiAward, FiCheckCircle, FiLayers, FiPlus } from 'react-icons/fi';
-import { Link, useHistory } from 'react-router-dom';
+import { FiAward, FiCheckCircle, FiLayers } from 'react-icons/fi';
+import { useHistory } from 'react-router-dom';
 import { FiMail, FiUser, FiUserCheck } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
@@ -16,15 +16,14 @@ import Button from '../../../components/Button';
 import Input from '../../../components/Input';
 import Select from '../../../components/Select';
 
-import { WrapperForm } from '../../../styles/shared';
-import { TitlePage } from '../styles';
-import {
-  Container,
-  Navigation,
-  Selector,
-  Sidebar,
-  InputFilter,
-} from './styles';
+import WidgetSidebar from '../../../shared/Sidebar';
+import WidgetNavigation from '../../../shared/Navigation';
+import WidgetAddButton from '../../../shared/AddButton';
+import WidgetForm from '../../../shared/WidgetForm';
+
+import { Container, Selector } from './styles';
+import TitlePage from '../../../shared/TitlePage';
+import Filter from '../../../components/Filter';
 
 interface CompanyData {
   id: string;
@@ -37,28 +36,15 @@ interface CompanyData {
 
 const CompanyPage: React.FC = () => {
   const history = useHistory();
+  const { addToast } = useToast();
   const companyId = history.location.state;
 
   const formRef = useRef<FormHandles>(null);
-  const { addToast } = useToast();
-
+  const [result, setResult] = useState<CompanyData[]>([]);
   const [companies, setCompanies] = useState<CompanyData[]>([]);
   const [selectedCompany, setSelectedCompany] = useState(companyId);
-  const [company, setCompany] = useState<CompanyData>();
   const [loading, setLoading] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filteredCompanies, setFilteredCompanies] = useState<CompanyData[]>([]);
-
-  const handleFilteredCompanies = useCallback(e => {
-    setSearchTerm(e.target.value);
-  }, []);
-
-  useEffect(() => {
-    const result = companies.filter(cia =>
-      cia.name.toLowerCase().includes(searchTerm.toLowerCase()),
-    );
-    setFilteredCompanies(result);
-  }, [companies, searchTerm]);
+  const [company, setCompany] = useState<CompanyData>();
 
   useEffect(() => {
     api.get('company/all').then(response => {
@@ -124,20 +110,13 @@ const CompanyPage: React.FC = () => {
   return (
     <Layout>
       <Container>
-        <Sidebar>
-          <Link to="/create-company">
-            <Button>
-              <FiPlus /> Adicionar
-            </Button>
-          </Link>
+        <WidgetSidebar>
+          <WidgetAddButton to="/create-company" />
 
-          <InputFilter
-            placeholder="Pesquise uma empresa"
-            onChange={e => handleFilteredCompanies(e)}
-          />
+          <Filter setResult={setResult} data={companies} />
 
-          <Navigation>
-            {filteredCompanies.map((company, i) => (
+          <WidgetNavigation>
+            {result.map((company, i) => (
               <Selector
                 key={i}
                 onClick={() => handleSelectCompany(company.id)}
@@ -146,10 +125,10 @@ const CompanyPage: React.FC = () => {
                 <h4>{company.name}</h4>
               </Selector>
             ))}
-          </Navigation>
-        </Sidebar>
+          </WidgetNavigation>
+        </WidgetSidebar>
 
-        <WrapperForm>
+        <WidgetForm>
           <Form
             ref={formRef}
             initialData={{
@@ -162,15 +141,7 @@ const CompanyPage: React.FC = () => {
             }}
             onSubmit={handleSubmit}
           >
-            <TitlePage>
-              <span>
-                <strong>Empresa:</strong> {company?.name}
-              </span>
-              <span>
-                <FiLayers />
-                {company?.plan}
-              </span>
-            </TitlePage>
+            <TitlePage icon={<FiLayers />} text={`Empresa: ${company?.name}`} />
 
             <Input name="id" invisible />
             <Input name="name" icon={FiUser} placeholder="Nome" />
@@ -186,7 +157,7 @@ const CompanyPage: React.FC = () => {
               Salvar
             </Button>
           </Form>
-        </WrapperForm>
+        </WidgetForm>
       </Container>
     </Layout>
   );
